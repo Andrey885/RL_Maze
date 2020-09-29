@@ -37,13 +37,13 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
   It is showed in general course of physics, that the state with minimal free energy is fully equivallent to the state, which minimizes **action functional** **J**:
   
-  <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;=&space;\int_{0}^{t}&space;L(\dot{q},&space;q,&space;t)&space;dt," target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," title="J = \int_{0}^{t} L(\dot{q}, q, t) dt," /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=J&space;=&space;\int_0^t&space;L(\dot{q},&space;q,&space;t)&space;dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;=&space;\int_0^t&space;L(\dot{q},&space;q,&space;t)&space;dt" title="J = \int_0^t L(\dot{q}, q, t) dt" /></a>
   
   <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" title="J \rightarrow min \Leftrightarrow F \rightarrow min" /></a>
   
   where <a href="https://www.codecogs.com/eqnedit.php?latex=L(\dot{q},&space;q,&space;t)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?L(\dot{q},&space;q,&space;t)" title="L(\dot{q}, q, t)" /></a> is the *Lagrange* function of physical system, defined as the differenece between kinetic and potential energy. It depends on impulses <a href="https://www.codecogs.com/eqnedit.php?latex=\dot{q}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dot{q}" title="\dot{q}" /></a>, coordinates *q* and time *t*.
   
-  <a href="https://www.codecogs.com/eqnedit.php?latex=L&space;=&space;T&space;-&space;U&space;=&space;\frac{\dot{q}^2}{2m}&space;-&space;U(q)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?L&space;=&space;T&space;-&space;U&space;=&space;\frac{p^2}{2m}&space;-&space;U(q)," title="L = T - U = \frac{p^2}{2m} - U(q)," /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=L&space;=&space;T&space;-&space;U&space;=&space;\frac{\dot{q}^2}{2m}&space;-&space;U(q)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?L&space;=&space;T&space;-&space;U&space;=&space;\frac{\dot{q}^2}{2m}&space;-&space;U(q)" title="L = T - U = \frac{\dot{q}^2}{2m} - U(q)" /></a>
   
   where *U(q)* denotes the *potential* - an important function, which will be explained further. *m* denotes the mass of the agent, which will be set to 1.
   
@@ -59,7 +59,7 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
   Where the force should be directed? It should be directed into minimizing the potential *U(q)* at each point *q*. In contrast with the initial free energy *F*, the potential *U(q)* is a mechanical term - free energy at each state is a single value for the whole system, while potential is a function of coordinates, fixed for any system state.
   
-  What is the physical equivallent for this task? Let's imagine a slide at the waterpark. The potential *U(q)* is exatly the form of that slide. At each moment a human inside the slope moves towards the gradient descent, guided by the **principle of least action**, or principle of minimal free energy, which is equivallent. It might be shown that this trajectory is the fastest way to get to the final point.
+  What is the physical equivallent for this task? Let's imagine a slide at the waterpark. The potential *U(q)* is exactly the form of that slide. At each moment a human inside the slope moves towards the gradient descent of *U(q)*, guided by the **principle of least action**, or principle of minimal free energy, which is equivallent. It might be shown that this trajectory is the fastest way to get to the final point.
   
   * **What the problem of shortest path in the maze is transformed into in this notation?**
   
@@ -78,4 +78,4 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
  ## Results
  
- Spoiler alert: it might be working better than q-learning baseline, but it'ss not staistically prooved yet.
+ Spoiler alert: it might be working better than q-learning baseline, but this is not staistically proven yet.
