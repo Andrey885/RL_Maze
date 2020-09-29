@@ -17,13 +17,13 @@ We use [gym](https://github.com/MattChanTK/gym-maze) to emulate the maze environ
 
   * **What is the free energy F in physics?**
   
-  In statistical physics and thermodynamics complicated systems are often described by a variety of thermodynamical potentials, such as entropy, enthalpy or free energy function. The important feature about this potentials is that all of them reach an extremum at the equilibrium state of the system. In out case the equilibrium state is defined as the bottom right corner of the maze, because at this point the agent does not have to do anything and can stay there forever, which is an equilibrium by definition.
+  In statistical physics and thermodynamics complicated systems are often described by a variety of thermodynamical potentials, such as entropy, enthalpy or free energy function. The important feature about this potentials is that all of them reach an extremum at the equilibrium state of the system. In out case the equilibrium state is defined as the agent reaching bottom right corner of the maze, because at this point the agent does not have to do anything and can stay there forever, which is an equilibrium by definition.
   
   Statistically the free energy *F* can be expressed using the *statistical sum* **Z**:
   
 <a href="https://www.codecogs.com/eqnedit.php?latex=Z&space;=&space;\sum_j&space;e^{E_j}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Z&space;=&space;\sum_j&space;e^{E_j}" title="Z = \sum_j e^{E_j}" /></a>, 
 
-where E denoted the the energy of each state. Then, free energy is:
+where E denotes the energy of each state. Then, free energy is:
  
 <a href="https://www.codecogs.com/eqnedit.php?latex=F&space;=&space;-kT&space;ln&space;Z" target="_blank"><img src="https://latex.codecogs.com/gif.latex?F&space;=&space;-kT&space;ln&space;Z" title="F = -kT ln Z" /></a>  ,
 
@@ -31,19 +31,19 @@ where *k* is the Boltzmann's constant and *T* is temperature.
 
   Hence the statistical description is acquired.
   
-  Thermodynamical or statistical description of a physical system is a powerfull tool, suitable to describe complicated many-particle systems. However, in a one-particle system such as ours it't much more convenient to use mechanical approach.
+  Thermodynamical or statistical description of a physical system is a powerfull tool, suitable to describe complicated many-particle systems. However, in a one-particle system such as ours it's much more convenient to use mechanical approach.
   
   * **The mechanical equivallent of minimizing the free energy**
   
   It is showed in general course of physics, that the state with minimal free energy is fully equivallent to the state, which minimizes **action functional** **J**:
   
-  <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," title="J = \int_{0}^{t} L(p, q, t) dt," /></a>
+  <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;=&space;\int_{0}^{t}&space;L(\dot{q},&space;q,&space;t)&space;dt," target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," title="J = \int_{0}^{t} L(\dot{q}, q, t) dt," /></a>
   
   <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" title="J \rightarrow min \Leftrightarrow F \rightarrow min" /></a>
   
-  where *L(p, q, t)* is the *Lagrange* function of physical system, defined as the differenece between kinetic and potential energy. It depends on impulses *p*, coordinates *q* and time *t*.
+  where <a href="https://www.codecogs.com/eqnedit.php?latex=L(\dot{q},&space;q,&space;t)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?L(\dot{q},&space;q,&space;t)" title="L(\dot{q}, q, t)" /></a> is the *Lagrange* function of physical system, defined as the differenece between kinetic and potential energy. It depends on impulses <a href="https://www.codecogs.com/eqnedit.php?latex=\dot{q}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dot{q}" title="\dot{q}" /></a>, coordinates *q* and time *t*.
   
-  <a href="https://www.codecogs.com/eqnedit.php?latex=L&space;=&space;T&space;-&space;U&space;=&space;\frac{p^2}{2m}&space;-&space;U(q)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?L&space;=&space;T&space;-&space;U&space;=&space;\frac{p^2}{2m}&space;-&space;U(q)," title="L = T - U = \frac{p^2}{2m} - U(q)," /></a>
+  <a href="https://www.codecogs.com/eqnedit.php?latex=L&space;=&space;T&space;-&space;U&space;=&space;\frac{\dot{q}^2}{2m}&space;-&space;U(q)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?L&space;=&space;T&space;-&space;U&space;=&space;\frac{p^2}{2m}&space;-&space;U(q)," title="L = T - U = \frac{p^2}{2m} - U(q)," /></a>
   
   where *U(q)* denotes the *potential* - an important function, which will be explained further. *m* denotes the mass of the agent, which will be set to 1.
   
