@@ -21,7 +21,9 @@ We use [gym](https://github.com/MattChanTK/gym-maze) to emulate the maze environ
   
   Statistically the free energy *F* can be expressed using the *statistical sum* **Z**:
   
-<a href="https://www.codecogs.com/eqnedit.php?latex=Z&space;=&space;\sum_j&space;e^{E_j}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Z&space;=&space;\sum_j&space;e^{E_j}" title="Z = \sum_j e^{E_j}" /></a>, where E denoted the the energy of each state. Then, free energy is:
+<a href="https://www.codecogs.com/eqnedit.php?latex=Z&space;=&space;\sum_j&space;e^{E_j}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Z&space;=&space;\sum_j&space;e^{E_j}" title="Z = \sum_j e^{E_j}" /></a>, 
+
+where E denoted the the energy of each state. Then, free energy is:
  
 <a href="https://www.codecogs.com/eqnedit.php?latex=F&space;=&space;-kT&space;ln&space;Z" target="_blank"><img src="https://latex.codecogs.com/gif.latex?F&space;=&space;-kT&space;ln&space;Z" title="F = -kT ln Z" /></a>  ,
 
@@ -32,9 +34,12 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   Thermodynamical or statistical description of a physical system is a powerfull tool, suitable to describe complicated many-particle systems. However, in a one-particle system such as ours it't much more convenient to use mechanical approach.
   
   * **The mechanical equivallent of minimizing the free energy**
+  
   It is showed in general course of physics, that the state with minimal free energy is fully equivallent to the state, which minimizes **action functional** **J**:
   
   <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;=&space;\int_{0}^{t}&space;L(p,&space;q,&space;t)&space;dt," title="J = \int_{0}^{t} L(p, q, t) dt," /></a>
+  
+  <a href="https://www.codecogs.com/eqnedit.php?latex=J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" target="_blank"><img src="https://latex.codecogs.com/gif.latex?J&space;\rightarrow&space;min&space;\Leftrightarrow&space;F&space;\rightarrow&space;min" title="J \rightarrow min \Leftrightarrow F \rightarrow min" /></a>
   
   where *L(p, q, t)* is the *Lagrange* function of physical system, defined as the differenece between kinetic and potential energy. It depends on impulses *p*, coordinates *q* and time *t*.
   
@@ -50,7 +55,27 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
   <a href="https://www.codecogs.com/eqnedit.php?latex=\ddot{q}&space;=&space;-&space;\frac{dU}{dq}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ddot{q}&space;=&space;-&space;\frac{dU}{dq}" title="\ddot{q} = - \frac{dU}{dq}" /></a>
   
-  Let's provide some insight for the last equation. <a href="https://www.codecogs.com/eqnedit.php?latex=\ddot{q}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ddot{q}" title="\ddot{q}" /></a> is the second derivative of the coordinate, or, taking into account *m=1*, the force. The force represents the action that the agent takes on each step - whether to go north, south, east or west. Where the force should be directed? It should be directed into minimizing the potential.
+  Let's provide some insight for the last equation. <a href="https://www.codecogs.com/eqnedit.php?latex=\ddot{q}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ddot{q}" title="\ddot{q}" /></a> is the second derivative of the coordinate, or, taking into account *m=1*, the force. The force represents the action that the agent takes on each step - whether to go north, south, east or west. 
   
+  Where the force should be directed? It should be directed into minimizing the potential *U(q)* at each point *q*. In contrast with the initial free energy *F*, the potential *U(q)* is a mechanical term - free energy at each state is a single value for the whole system, while potential is a function of coordinates, fixed for any system state.
   
+  What is the physical equivallent for this task? Let's imagine a slide at the waterpark. The potential *U(q)* is exatly the form of that slide. At each moment a human inside the slope moves towards the gradient descent, guided by the **principle of least action**, or principle of minimal free energy, which is equivallent. It might be shown that this trajectory is the fastest way to get to the final point.
   
+  * **What the problem of shortest path in the maze is transformed into in this notation?**
+  
+  We figured out that the shortest path for the agent to complete it's goal is to follow the potential *U(q)* descent. We basically want it to roll down the slope in a waterpark. The only problem is that the agent does not know the environment, and, hence, does not know the potential. We are gonna make the agent to learn it interacting with the environment. 
+  In order to learn *U(q)* efficiently we represent it as the sum of three different potentials:
+  
+  <a href="https://www.codecogs.com/eqnedit.php?latex=U(q)&space;=&space;U_{border}&space;&plus;&space;U_{optimal}&space;&plus;&space;U_{slope}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U(q)&space;=&space;U_{border}&space;&plus;&space;U_{optimal}&space;&plus;&space;U_{slope}" title="U(q) = U_{border} + U_{optimal} + U_{slope}" /></a>
+  
+  1) <a href="https://www.codecogs.com/eqnedit.php?latex=U_{border}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{border}" title="U_{border}" /></a> is needed to avoid walls and borders of the maze. Each time the agent tries to move from one cell to another and fails, we interpret it as an infinite potential wall between this cells. It automatically makes the agent not to go there the next time.
+  
+  2) <a href="https://www.codecogs.com/eqnedit.php?latex=U_{optimal}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{optimal}" title="U_{optimal}" /></a> represents the agent's approximation of potential.
+  
+  3) <a href="https://www.codecogs.com/eqnedit.php?latex=U_{slope}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{slope}" title="U_{slope}" /></a> is set to 1 at each point where agent has already been at each iteration. This part saves us from random walking back and forth at early stages and speeds up the training.
+  
+  The inference is simple: at each point the agent should go to the minimal potential in it's current poistion's neighbourhood. In order to increase exploration ability, sometimes the agent goes to random direction instead of known opimal. After the goal is reached, the potential is updated.
+  
+ ## Results
+ 
+ Spoiler alert: it might be working better than q-learning baseline, but it'ss not staistically prooved yet.
