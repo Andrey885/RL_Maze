@@ -78,4 +78,8 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
  ## Results
  
- Spoiler alert: it might be working better than q-learning baseline, but this is not staistically proven yet.
+ Out approach called 'Mechanical' is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym).
+ 
+ This graph is a learning curve averaged between 1000 different random initializations on the same environment (TODO: compare on different environments of different sizes). It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
+ 
+ ![Result](https://github.com/Andrey885/RL_Maze/blob/master/result.png)
