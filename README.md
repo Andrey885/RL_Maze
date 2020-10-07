@@ -82,4 +82,4 @@ where *k* is the Boltzmann's constant and *T* is temperature.
  
  This graph is a learning curve averaged between 1000 different random initializations on the same environment (TODO: compare on different environments of different sizes). It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
  
- ![Result](https://github.com/Andrey885/RL_Maze/blob/master/result.png)
+ <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_1000.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
