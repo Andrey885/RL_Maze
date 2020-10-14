@@ -88,7 +88,7 @@ where *k* is the Boltzmann's constant and *T* is temperature.
  
   Our approach called 'Mechanical' (blue line) is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym) (orange line). We also compare both of the algorithms with random walking (green line). 
 
- The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline. Both algorithms are much better than random walking.
+ The next graph is a learning curve averaged between 500 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline. Both algorithms are much better than random walking.
  
  <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_500.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
  
