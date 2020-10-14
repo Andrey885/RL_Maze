@@ -90,7 +90,7 @@ where *k* is the Boltzmann's constant and *T* is temperature.
 
  The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline. Both algorithms are much better than random walking.
  
- <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_1000.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
+ <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_500.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
  
    * **How to interpret the free energy from this graphs?**
    The initial idea is to use the free energy minimization principle, so it would be nice to check out how it changes during training. Let's revisit the free energy definition from thermodynamics:
