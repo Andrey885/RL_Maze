@@ -4,26 +4,35 @@ import math
 import cv2
 
 random.seed(4)
+np.random.seed(4)
 MIN_EXPLORE_RATE = 0.001
 MIN_LEARNING_RATE = 0.2
 
 
 class MazeSolver:
     def __init__(self, maze_size):
-        self.dUdq = np.zeros((maze_size[0], maze_size[1] + 2))  # +2 is for infinite borders padding
         self.optimal_U = np.ones((maze_size[0] + 2, maze_size[1] + 2))  # the maze solution
         self.road_U = np.ones((maze_size[0] + 2, maze_size[1] + 2))  # penalty to restrict agent from going where it has already been
         self.init_square_borders(maze_size)
-        self.dUdq = self.inf_padding(self.dUdq)
         self.optimal_U = self.inf_padding(self.optimal_U)
         self.road_U = self.inf_padding(self.road_U)
         self.encoding = np.array(['N', 'S', 'E', 'W'])
         self.path = []
         self.explore_rate = 0
         self.learning_rate = 0
+        self.step_number = 0
         self.maze_size = maze_size
         self.last_expected_position = (0,0)
-        self.min_found_step_count = np.inf
+        self.min_found_step_count = maze_size[0] * maze_size[1]
+        self.inference = False
+
+    def save_state(self):
+        self.best_U = self.optimal_U
+
+    def load_state(self):
+        self.explore_rate = 0
+        self.optimal_U = self.best_U
+        self.inference = True
 
     def init_square_borders(self, maze_size):
         self.borders_dict = {}
@@ -47,6 +56,8 @@ class MazeSolver:
             if not str(next_position) in self.borders_dict[str((x, y))]:
                 neighbouring_potentials[i] = self.optimal_U[next_position] + self.road_U[next_position]
         # q'' + dU/dq = 0
+        if self.inference:
+            print(x, y, neighbouring_potentials, self.optimal_U[x, y], self.optimal_U[x+1, y], self.optimal_U[x, y+1], self.optimal_U[x-1, y], self.optimal_U[x, y-1], self.borders_dict[str((x, y))])
         optimal_steps = np.argwhere(neighbouring_potentials == np.min(neighbouring_potentials))[:, 0]
         optimal_step = np.random.choice(optimal_steps)
         return optimal_step
@@ -55,7 +66,9 @@ class MazeSolver:
         x, y = state
         x = int(x) + 1  # padding
         y = int(y) + 1  # padding
-        self.road_U[x, y] += 1
+        # self.road_U[x, y] += np.max(self.optimal_U[self.optimal_U != np.inf])
+        self.road_U[x, y] += 1#self.step_number
+        # self.step_number += 1
         # Select a random action
         if random.random() < self.explore_rate:
             while True:
@@ -75,26 +88,20 @@ class MazeSolver:
         x_new += 1
         y_new += 1
         self.path.append([x_new, y_new])
-        if any(new_q != self.last_expected_position):
+        if x_new != self.last_expected_position[0] or y_new != self.last_expected_position[1]:
             self.borders_dict[str((x_new, y_new))].append(str(self.last_expected_position))
-        self.show()
-
-    def show(self):
-        map = (self.optimal_U + self.road_U).copy()
-        showing_map = np.zeros((map.shape[0], map.shape[1], 3))
-        map[map != np.inf] /= np.max(map[map != np.inf])
-        map *= 150
-        showing_map[(map == np.inf) | (map != map), :] = np.array([0, 0, 150])
-        showing_map[:, :, 0] = map
-        showing_map = showing_map.astype(np.uint8)
-        cv2.imshow('f', cv2.resize(showing_map, (640, 480), interpolation = cv2.INTER_NEAREST))
-        cv2.waitKey(1)
 
     def save_path_and_reset(self, step_count):
+        self.step_number = 0
+        self.road_U *= step_count / self.min_found_step_count
+        self.road_U[self.road_U == 1] = np.max(self.road_U[self.road_U != np.inf])
+        self.optimal_U *= self.road_U
+        self.optimal_U /= np.max(self.optimal_U[self.optimal_U != np.inf])
+        self.road_U = np.ones((self.maze_size[0] + 2, self.maze_size[1] + 2))
+        self.road_U = self.inf_padding(self.road_U)
         if step_count < self.min_found_step_count:
+            self.save_state()
             self.min_found_step_count = step_count
-            self.optimal_U = self.road_U
-        # print(np.array(self.path))
 
     @staticmethod
     def encode_action_to_next_position(action, x, y):
