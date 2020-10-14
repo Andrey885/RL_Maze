@@ -78,8 +78,14 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
  ## Results
  
- Out approach called 'Mechanical' is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym).
+ Our approach called 'Mechanical' is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym).
  
- This graph is a learning curve averaged between 1000 different random initializations on the same environment (TODO: compare on different environments of different sizes). It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
+ Here is the example of how the learned potential (left part) is derived after 150 iterations on the maze, depicted on the right part:
+ 
+ <img src="https://github.com/Andrey885/RL_Maze/blob/master/picture.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="631" height="300" />
+ 
+ Black spots mean that the potential is low, hence, the agent seeks to go that direction. Red lines denote <a href="https://www.codecogs.com/eqnedit.php?latex=U_{border}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{border}" title="U_{border}" /></a>. Check out the whitest spot on the picture - it's the closest incorrect turn for the agent. Since it's the closest it accumulates every further mistake.
+ 
+ The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
  
  <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_1000.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
