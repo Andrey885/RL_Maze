@@ -84,7 +84,9 @@ where *k* is the Boltzmann's constant and *T* is temperature.
  
  <img src="https://github.com/Andrey885/RL_Maze/blob/master/picture.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="631" height="300" />
  
- Black spots mean that the potential is low, hence, the agent seeks to go that direction. Red lines denote <a href="https://www.codecogs.com/eqnedit.php?latex=U_{border}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{border}" title="U_{border}" /></a>. Check out the whitest spot on the picture - it's the closest incorrect turn for the agent. Since it's the closest it accumulates every further mistake.
+ Black spots mean that the potential is low, hence, the agent seeks to go that direction. Red lines denote <a href="https://www.codecogs.com/eqnedit.php?latex=U_{border}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?U_{border}" title="U_{border}" /></a>. Check out the whitest spot on the picture - it's the closest incorrect turn for the agent. It accumulates every further mistake, and that is why the potential there is much higher.
+ 
+ Try to manually follow the gray path from left upper corner - it will lead you to the lower right corner.
  
  The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
  
