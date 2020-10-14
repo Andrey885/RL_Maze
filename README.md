@@ -4,7 +4,7 @@
 Inspired by Frinston's [active inference model](https://www.researchgate.net/publication/323968061_Planning_and_navigation_as_active_inference/link/5ab5362045851515f59a48fc/download), which aims to minimize the *free energy* function by Markov decision process. In this repo the same function is minimized using mechanical approach instead of Bayesian inference.
 
 ## Task
-Initilly the reinforcement agent (the blue ball) is placed at the upper left corner of the labirint. We want the agent to learn the shortest path to the destination, which is a red square at bottom right corner.
+Initially the reinforcement agent (the blue ball) is placed at the upper left corner of the labirint. We want the agent to learn the shortest path to the destination, which is a red square at bottom right corner.
 
 At every step the agent decides on 4 acts: go *north, south, east* or *west*. The environment provides the agent's position and whether the task is completed after each step as a respond.
 
@@ -78,8 +78,6 @@ where *k* is the Boltzmann's constant and *T* is temperature.
   
  ## Results
  
- Our approach called 'Mechanical' is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym).
- 
  Here is the example of how the learned potential (left part) is derived after 150 iterations on the maze, depicted on the right part:
  
  <img src="https://github.com/Andrey885/RL_Maze/blob/master/picture.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="631" height="300" />
@@ -88,6 +86,27 @@ where *k* is the Boltzmann's constant and *T* is temperature.
  
  Try to manually follow the gray path from left upper corner - it will lead you to the lower right corner.
  
- The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline.
+  Our approach called 'Mechanical' (blue line) is implemented and compared with q-learning baseline provided by [ai-gym](https://github.com/MattChanTK/ai-gym) (orange line). We also compare both of the algorithms with random walking (green line). 
+
+ The next graph is a learning curve averaged between 1000 different random initializations on the same environment. It is shown that in that setup our approach converges much faster at first, but it takes approximately as many steps to find a more optimal solution for us as for q-learning baseline. Both algorithms are much better than random walking.
  
  <img src="https://github.com/Andrey885/RL_Maze/blob/master/result_1000.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="400" height="300" />
+ 
+   * **How to interpret the free energy from this graphs?**
+   The initial idea is to use the free energy minimization principle, so it would be nice to check out how it changes during training. Let's revisit the free energy definition from thermodynamics:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=F&space;=&space;E&space;-&space;TS" target="_blank"><img src="https://latex.codecogs.com/gif.latex?F&space;=&space;E&space;-&space;TS" title="F = E - TS" /></a>
+
+F - free energy, E - inner energy, T - temperature, S - entropy.
+
+It's easy to derive energy:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=E&space;=&space;-&space;\Delta&space;U&space;=&space;\int_{0}^{q_{final}}&space;F&space;dq" target="_blank"><img src="https://latex.codecogs.com/gif.latex?E&space;=&space;-&space;\Delta&space;U&space;=&space;\int_{0}^{q_{final}}&space;F&space;dq" title="E = - \Delta U = \int_{0}^{q_{final}} F dq" /></a>
+
+The change of agent's inner energy is equal to drop of the potential and proportional to number of steps with the precision of technical constant.
+
+Let's talk about the second part of the free energy definition. We interpret F here as in a mechanical system, but, however, temperature is also stitched inside the algorithm. Nonzero temperature of a system means that at any moment the agent may do something random, which is a popular method to increase RL-model generalization. In physics it means that while moving towards global optimum of free energy any thermodynamical particle may fluctuate in an intractable way. In this code the probability of random choice is set as *explore_rate* in both q-learning baseline and mechanical approach. Using probabilities is more of a quantum way to describe a physical system, and we may resolve this issue coming up with a way to connect probability of fluctuation with it's energy (temperature). It's also possible to derive entropy from the statistical sum of every state (see the beginning of *Theory* part).
+
+However, lucky for us nonzero temperature plays a very small role during training. In the code *explore_rate* is expressed as *max(MIN_EXPLORE_RATE, min(0.8, 1.0 - math.log10((epoch+1)/decay_factor)))*, which approaches zero at epoch=25 for 5x5 maze (it is possible that playing with explore rate may improve the result, but we decided to leave the same rool as in q-learning baseline to ensure honest competittion).
+
+To conclude the answer to the latest question, free energy at each step after 25 epoch is proportional to the number of steps with very high precision and may be observed at the latest graph.
