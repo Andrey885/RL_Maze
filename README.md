@@ -109,4 +109,4 @@ Let's talk about the second part of the free energy definition. We interpret F h
 
 However, lucky for us nonzero temperature plays a very small role during training. In the code *explore_rate* is expressed as *max(MIN_EXPLORE_RATE, min(0.8, 1.0 - math.log10((epoch+1)/decay_factor)))*, which approaches zero at epoch=25 for 5x5 maze (it is possible that playing with explore rate may improve the result, but we decided to leave the same rool as in q-learning baseline to ensure honest competittion).
 
-To conclude the answer to the latest question, free energy at each step after 25 epoch is proportional to the number of steps with very high precision and may be observed at the latest graph.
+To conclude the answer to the latest question, free energy at each step after 25 epoch (approx. 2000 iterations) is proportional to the number of steps with very high precision and may be observed at the latest graph. For iterations before 2000 free energy is (number of steps) + (logarithmically decreasing uncertain function).
